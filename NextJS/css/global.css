@@ -1,0 +1,56 @@
+#backGround {
+    width: 50%;
+    display: block;
+    margin: auto;
+}
+
+p {
+    text-align: center;
+    display: block;
+    margin: auto;
+}
+
+button {
+    display: block;
+    margin: auto;
+}
+
+#link {
+    width: 25%;
+    border: 5px dashed orange;
+}
+
+#counterOneValue, #counterTwoValue {
+    border: 2px solid grey;
+    width: 20%;
+    background-color: brown;
+    color: white;
+}
+
+.productImages {
+    width: 150px;
+    display: block;
+    margin: auto;
+}
+
+#apiData {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: #2196F3;
+    padding: 10px;
+}
+
+.product {
+    padding: 20px;
+    background-color: grey;
+}
+
+#searchItems {
+    display: block;
+    margin: 20px auto 20px auto;
+}
+
+.searchBar {
+    display: block;
+    margin: auto;
+}

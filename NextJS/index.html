@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>NextJS</title>
+
+    <script src= "https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script src= "https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <link rel="stylesheet" href="css/global.css">
+
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <p id="link">Here is a <a href="https://github.com/Josiah-Shirley/NextJS.git">link</a> to my GitHub Repo where the code for this page is stored.</p>
+
+    <div id="searchItems">
+        <p class="sarchBar">Search:</p>
+        <input type="text" class="searchBar" id="input">
+        <input type="submit" name="submit" class="searchBar" id="submit">
+    </div>
+
+    <div id="apiData">
+        <!-- Store goes here -->
+    </div>
+
+
+<script type="text/babel">
+
+
+
+fetch('https://fakestoreapi.com/products')
+            .then(res=>res.json())
+            .then(displayAllProducts)
+
+
+function displayAllProducts(response) {
+    for (let i=0; i<20; i++) {
+        document.getElementById("apiData").innerHTML += 
+            `<div class="product"> 
+                <p>${response[i].title}</p>
+                <img class="productImages" src=${response[i].image} alt="product image">
+                <p>${response[i].price}</p>
+            </div>`;
+    }
+}
+
+const submitBtn = document.getElementById("submit");
+submitBtn.addEventListener("click", secondAPIFetch); 
+
+function secondAPIFetch() {
+    var titleForSearch = document.getElementById("input").value;
+    document.getElementById("apiData").innerHTML = titleForSearch;
+    fetch('https://fakestoreapi.com/products')
+            .then(res=>res.json())
+            .then(displayProductsByName)
+}
+
+function displayProductsByName(response) {
+    var titleForSearch = document.getElementById("apiData").innerHTML;
+    document.getElementById("apiData").innerHTML = "";
+    for (let i=0; i<20; i++) {
+        if (response[i].title.toLowerCase().includes(titleForSearch.toLowerCase())) {
+            document.getElementById("apiData").innerHTML += 
+            `<div class="product"> 
+                <p>${response[i].title}</p>
+                <img class="productImages" src=${response[i].image} alt="product image">
+                <p>${response[i].price}</p>
+            </div>`;
+        }
+    }
+}
+
+
+    function Counters() {
+
+        function Incriment(props) {
+            const div = document.getElementById("backGround");
+            div.style.backgroundColor = props.color;
+
+            const currentValOne = document.getElementById("counterOneValue").textContent;
+            const currentValTwo = document.getElementById("counterTwoValue").textContent;
+            var toBeIncrimentedVal = 0;
+            var nextVal = 0;
+            if (parseInt(props.value) == 1 ) {
+                var nextVal = parseInt(currentValOne) + parseInt(props.value);
+                if (nextVal > 10) {
+                    nextVal = 0;
+                } 
+                return (
+                    <div id="backGround">
+                        <p id="counterOneValue">
+                            {nextVal}
+                        </p>
+                        <p id="counterTwoValue">
+                            {currentValTwo}
+                        </p>
+                        <button onClick={addOne}>
+                            +1
+                        </button>
+                        <button onClick={addTwo}>
+                            +2
+                        </button>
+                    </div>
+                ); 
+            } else {
+                var nextVal = parseInt(currentValTwo) + parseInt(props.value);
+                if (nextVal > 10) {
+                    nextVal = 0;
+                } 
+                return (
+                    <div id="backGround">
+                        <p id="counterOneValue">
+                            {currentValOne}
+                        </p>
+                        <p id="counterTwoValue">
+                            {nextVal}
+                        </p>
+                        <button onClick={addOne}>
+                            +1
+                        </button>
+                        <button onClick={addTwo}>
+                            +2
+                        </button>
+                    </div>
+                ); 
+            }
+
+        }
+
+
+        function addOne() {
+            ReactDOM.render(<Incriment value="1" color="#ADD8E6"/>, document.getElementById('root'));
+        }
+
+        function addTwo() {
+            ReactDOM.render(<Incriment value="2" color="#90EE90"/>, document.getElementById('root'));
+        }
+
+
+        return (
+            <div id="backGround">
+                <p id="counterOneValue">
+                    0
+                </p>
+                <p id="counterTwoValue">
+                    0
+                </p>
+                <button onClick={addOne}>
+                    +1
+                </button>
+                <button onClick={addTwo}>
+                    +2
+                </button>
+            </div>
+        );
+    }
+
+    ReactDOM.render(<Counters/>, document.getElementById('root'));
+
+
+
+</script>
+
+</body>
+</html>
